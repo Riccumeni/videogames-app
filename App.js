@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import axios from "axios";
 import {HomeScreen} from "./screens/HomeScreen";
+import GameScreen from "./screens/GameScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +19,7 @@ export default function App() {
             title: "",
             headerStyle: {backgroundColor: "white"},
         }}/>
-        <Tab.Screen name="Search" component={HomeScreen} />
+        <Tab.Screen name="Search" component={GameScreen} />
         <Tab.Screen name="Favorites" component={HomeScreen} />
         <Tab.Screen name="Settings" component={HomeScreen} />
       </Tab.Navigator>
