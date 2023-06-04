@@ -1,8 +1,13 @@
 import {StyleSheet, View, Text, ScrollView} from "react-native";
 import {colors} from "../assets/colors";
 import GameCard from "../components/GameCard";
+import {Blur, Canvas, Image, useImage, SkiaView} from "@shopify/react-native-skia";
 
 export const HomeScreen = () => {
+    const image = useImage('https://picsum.photos/200/300');
+    if (!image) {
+        return null;
+    }
     return (
         <View style={styles.container}>
             <Text style={styles.comingGamesText}>Next Coming Games</Text>
