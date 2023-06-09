@@ -11,6 +11,7 @@ import React, {useEffect} from "react";
 import Header from "./components/Header";
 import {FontAwesome} from "@expo/vector-icons";
 import {Ionicons} from "@expo/vector-icons";
+import {Favourite} from "./components/Favourite";
 
 const Tab = createBottomTabNavigator();
 
@@ -47,9 +48,7 @@ export default function App() {
             borderBottomWidth: 0,
           },
           tabBarIcon: () => {return <FontAwesome name="search" size={24} color="white" style={{alignSelf: "center"}}/>},
-          headerRight: () => ( <View style={{marginRight: 20, justifyContent: "center", width: 30, height: 30, backgroundColor: "#D2E4FF", opacity: .5, borderRadius: 15, alignSelf: "flex-end"}}>
-            <FontAwesome name="heart" size={18} color="#001C37" style={{alignSelf: "center"}}/>
-          </View>)
+          headerRight: () => ( <Favourite />)
         }}/>
         <Tab.Screen name="Favorites" component={HomeScreen} options={{
           tabBarIcon: () => {return <FontAwesome name="heart" size={24} color="white" style={{alignSelf: "center"}}/>}

@@ -1,13 +1,14 @@
-import {StyleSheet, View, Text, ScrollView} from "react-native";
+import {StyleSheet, View, Text, ScrollView, TouchableOpacity} from "react-native";
 import {colors} from "../assets/colors";
 import GameCard from "../components/GameCard";
-import {Blur, Canvas, Image, useImage, SkiaView} from "@shopify/react-native-skia";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {MaterialIcons} from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons';
 
 export const HomeScreen = () => {
 
-    const [game, setGame] = useState([]);
+    const [games, setGames] = useState([]);
 
     let day = new Date().getDate().toString();
     let month = new Date().getMonth().toString();
@@ -21,21 +22,27 @@ export const HomeScreen = () => {
         month = "0" + month;
     }
 
+
     // 2010-01-01
     useEffect(() => {
-        axios.get(`https://api.rawg.io/api/games?dates=2023-06-10,2023-07-10&ordering=-added&key=3f0a855ff4384b05af50094b2c218aaf`)
+        axios.get(`https://api.rawg.io/api/games?dates=${year}-${month}-${day},${Number.parseInt(year) + 1 + 1}-${month}-${day}&ordering=-added&key=3f0a855ff4384b05af50094b2c218aaf`)
             .then(result => {
-                setGame(result.data.results)
+                setGames(result.data.results)
             })
     }, [])
 
     return (
         <View style={styles.container}>
-            <Text style={styles.comingGamesText}>Next Coming Games</Text>
-            <ScrollView horizontal={true}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 40, marginHorizontal: 20}}>
+                <Text style={styles.comingGamesText}>Next Coming Games</Text>
+                <TouchableOpacity style={{justifyContent: 'center'}}>
+                    <AntDesign name="right" size={24} color="white" />
+                </TouchableOpacity>
+            </View>
+            <ScrollView horizontal={true} style={{paddingLeft: 10}}>
                 {
-                    game.map(game => {
-                        return <GameCard name={game?.name} urlImage={game?.background_image}/>
+                    games?.map(game => {
+                        return <GameCard name={game?.name} urlImage={game?.background_image} day={game?.released.split("-")[2]} month={game?.released.split("-")[1]}/>
                     })
                 }
             </ScrollView>
@@ -48,7 +55,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.background,
         gap: 20,
-        padding: 20
     },
     comingGamesText: {
         color: "white",

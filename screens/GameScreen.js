@@ -40,7 +40,7 @@ export const GameScreen = () => {
                     <Text style={styles.iconText}>{game.metacritic ? game.metacritic : "not rated"}</Text>
                 </View>
 
-                <Text style={styles.description}>{game.description_raw?.split(".")[0] + game.description_raw?.split(".")[0] + "."}</Text>
+                <Text style={styles.description}>{game.description_raw?.split(".")[0] + game.description_raw?.split(".")[1] + "."}</Text>
 
                 <Text style={styles.titleSection}>Genre</Text>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{paddingLeft: 20}}>
