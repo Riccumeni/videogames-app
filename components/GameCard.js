@@ -41,8 +41,13 @@ export const GameCard = (props) => {
             month = "DEC";
             break;
     }
+    if(props.full){
+        styles.container.width = "100%"
+        styles.container.height = 250;
+        styles.container.marginVertical = 20;
+        styles.container.marginHorizontal = 0;
+    }
     return (
-
         <ImageBackground style={styles.container} source={{uri: props.urlImage}} borderRadius="20" >
             <View style={{borderBottomRightRadius: 20, borderBottomLeftRadius: 20, height: 50, width: "100%", overflow: "hidden"}}>
                 <BlurView style={styles.titleContainer}>
@@ -67,8 +72,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         justifyContent:'flex-end',
-        marginHorizontal: 10
-
+        marginHorizontal: 10,
+        marginVertical: 0
     },
     titleContainer: {
         width: "100%",

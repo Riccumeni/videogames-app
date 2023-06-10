@@ -8,18 +8,18 @@ import TagCard from "../components/TagCard";
 import { FontAwesome } from '@expo/vector-icons';
 
 
-export const GameScreen = () => {
+export const GameScreen = ({route}) => {
 
     let [game, setGame] = useState({});
     let [image, setImage] = useState([]);
 
     useEffect(() => {
-        axios.get("https://api.rawg.io/api/games/292842?key=3f0a855ff4384b05af50094b2c218aaf")
+        axios.get(`https://api.rawg.io/api/games/${route.params.id}?key=3f0a855ff4384b05af50094b2c218aaf`)
             .then(result => {
                 setGame(() => result.data);
             })
 
-        axios.get("https://api.rawg.io/api/games/292842/screenshots?key=3f0a855ff4384b05af50094b2c218aaf")
+        axios.get(`https://api.rawg.io/api/games/${route.params.id}/screenshots?key=3f0a855ff4384b05af50094b2c218aaf`)
             .then(result => {
                 setImage(() => result.data.results);
             })
