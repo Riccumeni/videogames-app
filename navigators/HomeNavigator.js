@@ -31,7 +31,7 @@ export const HomeNavigator = () => {
                 }}/>
                 <Stack.Screen name="Game" component={GameScreen} options={{
                     headerTitle : "",
-                    headerRight: () => ( <Favourite />),
+                    headerShown: false,
                     headerTintColor: "white",
                     headerStyle: {
                         backgroundColor: colors.background,

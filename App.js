@@ -15,6 +15,9 @@ import {Favourite} from "./components/Favourite";
 import {HomeNavigator} from './navigators/HomeNavigator'
 import {FavouritesScreen} from "./screens/FavouritesScreen";
 import SearchScreen from "./screens/SearchScreen";
+import SearchNavigator from "./navigators/SearchNavigator";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import FavouriteNavigator from "./navigators/FavouriteNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -36,18 +39,13 @@ export default function App() {
             headerShown: false,
             tabBarIcon: ({focused}) => {return <FontAwesome  name="home" size={24} color={'white'} style={{alignSelf: "center", opacity: focused ? 1 : .5}}/>}
           }}/>
-        <Tab.Screen name="Search" component={SearchScreen} options={{
-          headerTitleStyle: {color: 'white'},
+        <Tab.Screen name="Search" component={SearchNavigator} options={{
+          headerShown: false,
           tabBarActiveTintColor: 'white',
-          headerStyle: {
-            opacity: .95,
-            backgroundColor: colors.background,
-            shadowOpacity: 0,
-            borderBottomWidth: 0,
-          },
           tabBarIcon: ({focused}) => {return <FontAwesome name="search" size={24} color="white" style={{alignSelf: "center", opacity: focused ? 1 : .5}}/>},
         }}/>
-        <Tab.Screen name="Favourites" component={FavouritesScreen} options={{
+        <Tab.Screen name="Favourites" component={FavouriteNavigator} options={{
+          headerShown: false,
           tabBarActiveTintColor: 'white',
           tabBarIcon: ({focused}) => {return <FontAwesome name="heart" size={24} color="white" style={{alignSelf: "center", opacity: focused ? 1 : .5}}/>}
         }}/>

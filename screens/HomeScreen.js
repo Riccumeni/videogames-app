@@ -1,4 +1,4 @@
-import {StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView} from "react-native";
+import {StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, FlatList} from "react-native";
 import {colors} from "../assets/colors";
 import GameCard from "../components/GameCard";
 import {useEffect, useState} from "react";
@@ -37,15 +37,11 @@ export const HomeScreen = ({navigation}) => {
                     <AntDesign name="right" size={24} color="white" />
                 </TouchableOpacity>
             </View>
-            <ScrollView horizontal={true} style={{paddingLeft: 10}}>
-                {
-                    games?.map(game => {
-                        return <TouchableOpacity onPress={() => navigation.navigate("Game", {id: game?.id})}>
-                            <GameCard  name={game?.name} urlImage={game?.background_image} day={game?.released.split("-")[2]} month={game?.released.split("-")[1]}/>
-                        </TouchableOpacity>
-                    })
-                }
-            </ScrollView>
+            <FlatList data={games} renderItem={(game) => {
+                return <TouchableOpacity onPress={() => navigation.navigate("Game", {id: game?.item.id})}>
+                    <GameCard name={game?.item.name} urlImage={game?.item.background_image} day={game?.item.released.split("-")[2]} month={game?.item.released.split("-")[1]}/>
+                </TouchableOpacity>
+            }} horizontal={true}/>
         </SafeAreaView>
     );
 }

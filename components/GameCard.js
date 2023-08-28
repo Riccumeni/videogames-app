@@ -47,6 +47,15 @@ export const GameCard = (props) => {
         styles.container.marginVertical = 20;
         styles.container.marginHorizontal = 0;
     }
+
+    if(typeof props.year !== 'undefined'){
+        let dateNow = new Date(Date.now()).getTime();
+        let gameDate = new Date(`${props.year}-${props.month}-${props.day}`);
+        if(gameDate < dateNow){
+            props.day = ""
+        }
+    }
+
     return (
         <ImageBackground style={styles.container} source={{uri: props.urlImage}} borderRadius="20" >
             <View style={{borderBottomRightRadius: 20, borderBottomLeftRadius: 20, height: 50, width: "100%", overflow: "hidden"}}>
