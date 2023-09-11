@@ -18,6 +18,8 @@ import SearchScreen from "./screens/SearchScreen";
 import SearchNavigator from "./navigators/SearchNavigator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FavouriteNavigator from "./navigators/FavouriteNavigator";
+import SettingsScreen from "./screens/SettingsScreen";
+import {SettingsNavigator} from "./navigators/SettingsNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -49,7 +51,15 @@ export default function App() {
           tabBarActiveTintColor: 'white',
           tabBarIcon: ({focused}) => {return <FontAwesome name="heart" size={24} color="white" style={{alignSelf: "center", opacity: focused ? 1 : .5}}/>}
         }}/>
-        <Tab.Screen name="Settings" component={HomeScreen} options={{
+        <Tab.Screen name="Settings" component={SettingsNavigator} options={{
+          headerShown: true,
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: colors.background,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+            opacity: .95,
+          },
           tabBarActiveTintColor: 'white',
           tabBarIcon: ({focused}) => {return <Ionicons name="settings" size={24} color="white" style={{alignSelf: "center", opacity: focused ? 1 : .5}}/>}
         }}/>

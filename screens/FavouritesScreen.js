@@ -7,7 +7,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import {colors} from "../assets/colors";
 
 // TODO: modificare il codice affinche salvi tutto l'oggetto e non solo l'id
-export const FavouritesScreen = () => {
+export const FavouritesScreen = ({navigation}) => {
     const [games, setGames] = useState([]);
 
     useFocusEffect(() => {
@@ -20,7 +20,7 @@ export const FavouritesScreen = () => {
     return (
       <View style={styles.container}>
           <FlatList data={games} renderItem={(game) => {
-              return <TouchableOpacity style={{marginVertical: 20}}>
+              return <TouchableOpacity style={{marginVertical: 20}} onPress={() => navigation.navigate("Game", {id: game?.item.id})}>
                   <GameCard  name={game?.item.name} urlImage={game?.item.background_image} day={game?.item.released?.split("-")[2]} month={game?.item.released?.split("-")[1]}/>
               </TouchableOpacity>
           }} horizontal={false}/>
