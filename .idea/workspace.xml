@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f86ae4ee-da7f-484f-9d77-a881c92fc71a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/navigators/SettingsNavigator.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/PlatformsScreen.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/SettingsScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/babel.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/FavouritesScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/FavouritesScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/PlatformsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/PlatformsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/SettingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SettingsScreen.js" afterDir="false" />
     </list>
     <list id="3a2ad789-2fdf-4f08-a7d4-02a469c24845" name="Changes by icts22-24.046" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -122,6 +117,10 @@
       <workItem from="1693385272341" duration="4162000" />
       <workItem from="1694419709551" duration="2820000" />
       <workItem from="1694424343056" duration="3842000" />
+      <workItem from="1694431822669" duration="1152000" />
+      <workItem from="1694511019582" duration="70000" />
+      <workItem from="1694511353699" duration="2046000" />
+      <workItem from="1694588535231" duration="3779000" />
     </task>
     <servers />
   </component>

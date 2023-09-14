@@ -1,27 +1,39 @@
 import {Text, StyleSheet, SafeAreaView, View, TouchableOpacity, Dimensions, FlatList} from "react-native";
-import {React, useState} from "react";
+import {React, useEffect, useState} from "react";
 import {colors} from "../assets/colors";
 import {Entypo, Fontisto, MaterialIcons} from "@expo/vector-icons";
 import {useSharedValueEffect} from "@shopify/react-native-skia";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming} from "react-native-reanimated";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useFocusEffect} from "@react-navigation/native";
 
 export const SettingsScreen = ({navigation}) => {
+    const [platforms, setPlatforms] = useState([])
     const animation = useSharedValue({height: 100})
     const animationStyle = useAnimatedStyle(() => {
         return {
-            height: withTiming(animation.value.height, {duration: 500}, () => {})
+            height: withTiming(animation.value.height, {duration: 500})
         }
     })
 
     let [platformsExpandChecked, setPlatformsExpandChecked] = useState(false)
 
-    const platforms = [
-        "Playstation 4",
-        "Xbox Series S",
-        "Switch",
-        "Ios",
-        "Atari"
-    ]
+    const getPlatforms = async () => {
+        let platforms = await AsyncStorage.getItem('platforms');
+        if(platforms != null){
+            platforms = JSON.parse(platforms);
+        }else{
+            platforms = JSON.parse('[]')
+        }
+
+        return platforms
+    }
+
+    useFocusEffect(() => {
+        getPlatforms().then(p => {
+            setPlatforms([...p])
+        })
+    })
 
     return (
         <SafeAreaView style={styles.container}>
@@ -50,7 +62,7 @@ export const SettingsScreen = ({navigation}) => {
                         }
                     }
                 }>
-                    <MaterialIcons name="keyboard-arrow-down" size={28} color="white" style={styles.expandIcon}/>
+                    <MaterialIcons name="keyboard-arrow-down" size={28} color="white" />
                 </TouchableOpacity>
             </Animated.View>
         </SafeAreaView>
@@ -79,5 +91,6 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     expandIcon: {
+
     }
 })

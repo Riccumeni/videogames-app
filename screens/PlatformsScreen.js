@@ -1,5 +1,5 @@
 import {FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {React, useState} from "react";
+import {React, useEffect, useState} from "react";
 import {colors} from "../assets/colors";
 import {Entypo, Fontisto, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -44,11 +44,13 @@ const deletePlatform = async (platformSelected) => {
 
     await AsyncStorage.setItem("platforms", JSON.stringify(platforms));
 
+    return platforms
+
 }
 
 const addPlatform = async (platformSelected) => {
-    let platforms = await AsyncStorage.getItem('favourites');
-    if(platformSelected != null){
+    let platforms = await AsyncStorage.getItem('platforms');
+    if(platformSelected != null && platforms != null){
         platforms = JSON.parse(platforms);
     }else{
         platforms = JSON.parse('[]')
@@ -56,12 +58,25 @@ const addPlatform = async (platformSelected) => {
 
     for (const platform of platforms) {
         if (platform === platformSelected) {
-            return;
+            return platforms;
         }
     }
 
+
     platforms.push(platformSelected);
     await AsyncStorage.setItem("platforms", JSON.stringify(platforms));
+    return platforms
+}
+
+const getPlatforms = async () => {
+    let platforms = await AsyncStorage.getItem('platforms');
+    if(platforms != null){
+        platforms = JSON.parse(platforms);
+    }else{
+        platforms = JSON.parse('[]')
+    }
+
+    return platforms
 }
 
 export const PlatformsScreen = () => {
@@ -77,6 +92,13 @@ export const PlatformsScreen = () => {
 
     const [favouritePlatforms, setFavouritePlatforms] = useState([]);
 
+    useEffect(() => {
+        getPlatforms().then(platforms => {
+            setFavouritePlatforms([...platforms])
+        })
+    }, []);
+
+
     return (
         <SafeAreaView style={styles.background}>
             <Text style={styles.title}>Set Favourite Platforms</Text>
@@ -89,10 +111,8 @@ export const PlatformsScreen = () => {
 
             <FlatList showsVerticalScrollIndicator={false} style={{marginTop: 20}} data={platforms} renderItem={(platform) => {
                 return <TouchableOpacity style={styles.box} onPress={() => {
-                    addPlatform(platform.item).then(() => {
-                        let platforms = favouritePlatforms
-                        platforms.push(platform.item)
-                        setFavouritePlatforms(platforms)
+                    addPlatform(platform.item).then((p) => {
+                        setFavouritePlatforms([...p])
                     })
                 }}>
                     <View style={{flexDirection: 'row', gap: 20}}>
@@ -100,12 +120,8 @@ export const PlatformsScreen = () => {
                         <Text style={styles.text}>{platform.item}</Text>
                     </View>
                     <TouchableOpacity style={{backgroundColor: 'white', padding: 5, borderRadius: 10}} onPress={() => {
-                        deletePlatform(platform.item).then(() => {
-                            let platforms = favouritePlatforms
-                            platforms = platforms.filter(platform => {
-                                return platform.toLowerCase() !== platform.item.toLowerCase()
-                            })
-                            setFavouritePlatforms(platforms)
+                        deletePlatform(platform.item).then((p) => {
+                            setFavouritePlatforms([...p])
 
                         })
                     }}>
