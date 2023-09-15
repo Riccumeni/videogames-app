@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         justifyContent:'flex-end',
-        marginHorizontal: 10,
+        marginHorizontal: 20,
         marginVertical: 0
     },
     titleContainer: {

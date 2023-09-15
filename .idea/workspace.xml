@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f86ae4ee-da7f-484f-9d77-a881c92fc71a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/components/BoxPreference.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/Utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Favourite.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Favourite.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/GameCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/GameCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigators/HomeNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigators/HomeNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigators/SettingsNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigators/SettingsNavigator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/FavouritesScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/FavouritesScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/GameScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/GameScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/PlatformsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/PlatformsScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/SettingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SettingsScreen.js" afterDir="false" />
     </list>
@@ -121,6 +130,9 @@
       <workItem from="1694511019582" duration="70000" />
       <workItem from="1694511353699" duration="2046000" />
       <workItem from="1694588535231" duration="3779000" />
+      <workItem from="1694674055582" duration="4360000" />
+      <workItem from="1694692938524" duration="4075000" />
+      <workItem from="1694762490594" duration="2530000" />
     </task>
     <servers />
   </component>
@@ -146,7 +158,7 @@
       <breakpoints>
         <line-breakpoint log-message="true" log-stack="true" type="javascript">
           <url>file://$PROJECT_DIR$/screens/HomeScreen.js</url>
-          <line>16</line>
+          <line>20</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

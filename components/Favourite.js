@@ -6,6 +6,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const Favourite = (props) => {
     const searchGame = async (game) => {
         let favourites = await JSON.parse(await AsyncStorage.getItem('favourites'));
+        if(favourites === null){
+            return false;
+        }
         for (const favourite of favourites) {
             if (favourite.id === game.id) {
                 return true;
@@ -19,7 +22,7 @@ export const Favourite = (props) => {
         favourites = JSON.parse(favourites);
 
         favourites = await favourites.filter(favourite => {
-            return favourite.id !== game.id
+            return favourite.id !== game.id;
         })
 
         await AsyncStorage.setItem("favourites", JSON.stringify(favourites));

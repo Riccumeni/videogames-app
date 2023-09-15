@@ -16,7 +16,14 @@ export const HomeNavigator = () => {
                     name="Home"
                     component={HomeScreen}
                     options={{
-                        headerShown: false
+                        headerShown: true,
+                        headerTintColor: 'white',
+                        headerStyle: {
+                            backgroundColor: "#1D242E",
+                            shadowOpacity: 0,
+                            borderBottomWidth: 0,
+                            opacity: .95,
+                        },
                     }}
                 />
                 <Stack.Screen name="Coming Games" component={ComingGamesScreen} options={{

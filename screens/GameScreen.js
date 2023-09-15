@@ -32,9 +32,7 @@ export const GameScreen = ({route, navigation}) => {
 
     return(
         Object.keys(game).length === 0 ? <Text>Is loading</Text> :
-        <ImageBackground style={styles.container} source={{uri: game.background_image_additional}}>
-            <View style={{position: "absolute", width: "100%", height: "100%", backgroundColor: colors.background, top: 0, left: 0, opacity: 0.95}}></View>
-
+        <View style={styles.container} >
             <View style={styles.topBar}>
                 <TouchableOpacity style={{flexDirection: 'row', alignItems: 'baseline'}} onPress={() => navigation.dispatch(StackActions.popToTop())}>
                     <Ionicons style={{alignSelf: "flex-end"}} name="chevron-back-outline" size={28} color="white" />
@@ -96,7 +94,7 @@ export const GameScreen = ({route, navigation}) => {
                     }
                 </ScrollView>
             </ScrollView>
-        </ImageBackground>
+        </View>
     );
 }
 
@@ -114,6 +112,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+        backgroundColor: colors.background
     },
     title: {
         color: "white",

@@ -24,6 +24,7 @@ import {SettingsNavigator} from "./navigators/SettingsNavigator";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  // TODO: REMOVE ASYNCSTORAGE.CLEAR()
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{
@@ -52,7 +53,7 @@ export default function App() {
           tabBarIcon: ({focused}) => {return <FontAwesome name="heart" size={24} color="white" style={{alignSelf: "center", opacity: focused ? 1 : .5}}/>}
         }}/>
         <Tab.Screen name="Settings" component={SettingsNavigator} options={{
-          headerShown: true,
+          headerShown: false,
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: colors.background,

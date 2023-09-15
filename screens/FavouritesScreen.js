@@ -20,11 +20,18 @@ export const FavouritesScreen = ({navigation}) => {
 
     return (
       <View style={styles.container}>
-          <FlatList data={games} renderItem={(game) => {
-              return <TouchableOpacity style={{marginVertical: 20}} onPress={() => navigation.navigate("Game", {id: game?.item.id})}>
-                  <GameCard  name={game?.item.name} urlImage={game?.item.background_image} day={game?.item.released?.split("-")[2]} month={game?.item.released?.split("-")[1]}/>
-              </TouchableOpacity>
-          }} horizontal={false} showsVerticalScrollIndicator={false}/>
+          {
+              games.length !== 0 ?
+                  <FlatList data={games} renderItem={(game) => {
+                  return <TouchableOpacity style={{marginVertical: 20}}
+                                           onPress={() => navigation.navigate("Game", {id: game?.item.id})}>
+                      <GameCard name={game?.item.name} urlImage={game?.item.background_image}
+                                day={game?.item.released?.split("-")[2]} month={game?.item.released?.split("-")[1]}/>
+                  </TouchableOpacity>
+              }} horizontal={false} showsVerticalScrollIndicator={false}/>
+          :
+                  <Text style={styles.text}>No favourite selected yet</Text>
+          }
       </View>
     );
 }
@@ -33,6 +40,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.background,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    text: {
+        color: 'white',
+        fontSize: 18,
+        opacity: .8
     }
 })
