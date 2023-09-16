@@ -29,7 +29,7 @@ export const HomeScreen = ({navigation}) => {
     useEffect(() => {
         axios.get(`https://api.rawg.io/api/games?dates=${year}-${month}-${day},${Number.parseInt(year) + 1}-${month}-${day}&ordering=-added&key=3f0a855ff4384b05af50094b2c218aaf`)
             .then(result => {
-                setGames(result.data.results)
+                setGames(result.data)
             })
     }, [])
 
@@ -42,7 +42,7 @@ export const HomeScreen = ({navigation}) => {
             })
 
             axios.get(`https://api.rawg.io/api/games?platforms=${platformsComma.toString()}&ordering=-metacritic&key=3f0a855ff4384b05af50094b2c218aaf`).then(response => {
-                setGamesBasedOnPlatforms([...response.data.results])
+                setGamesBasedOnPlatforms([...response.data])
             })
         })
     }, []))
@@ -51,17 +51,20 @@ export const HomeScreen = ({navigation}) => {
         <SafeAreaView style={styles.container}>
 
             <ScrollView >
+
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 40, marginHorizontal: 20}}>
                     <Text style={styles.comingGamesText}>Next Coming Games</Text>
                     <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => navigation.navigate("Coming Games", {games: games})}>
                         <AntDesign name="right" size={24} color="white" />
                     </TouchableOpacity>
                 </View>
-                <FlatList style={{flexGrow: 0}} data={games} renderItem={(game) => {
+
+                <FlatList style={{flexGrow: 0}} data={games.results?.slice(0, 9)} renderItem={(game) => {
                     return <TouchableOpacity onPress={() => navigation.navigate("Game", {id: game?.item.id})}>
                         <GameCard name={game?.item.name} urlImage={game?.item.background_image} day={game?.item.released.split("-")[2]} month={game?.item.released.split("-")[1]}/>
                     </TouchableOpacity>
                 }} horizontal={true} showsHorizontalScrollIndicator={false}/>
+
                 {
                     gamesBasedOnPlatforms.length > 0 ?
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 40, marginHorizontal: 20}}>
@@ -71,7 +74,7 @@ export const HomeScreen = ({navigation}) => {
                         </TouchableOpacity>
                     </View> : undefined
                 }
-                <FlatList style={{flexGrow: 0}} data={gamesBasedOnPlatforms} renderItem={(game) => {
+                <FlatList style={{flexGrow: 0}} data={gamesBasedOnPlatforms.results?.slice(0, 9)} renderItem={(game) => {
                     return <TouchableOpacity onPress={() => navigation.navigate("Game", {id: game?.item.id})}>
                         <GameCard name={game?.item.name} urlImage={game?.item.background_image} day={game?.item.released.split("-")[2]} month={game?.item.released.split("-")[1]}/>
                     </TouchableOpacity>
