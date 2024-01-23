@@ -1,7 +1,7 @@
 import {Dimensions, FlatList, Text, TouchableOpacity, View, StyleSheet} from "react-native";
 import {Entypo, MaterialIcons} from "@expo/vector-icons";
 import Animated, {useAnimatedStyle, useSharedValue, withTiming} from "react-native-reanimated";
-import {React, useState} from "react";
+import {React, useCallback, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useFocusEffect} from "@react-navigation/native";
 
@@ -30,11 +30,11 @@ export const BoxPreference = (props) => {
         return platforms
     }
 
-    useFocusEffect(() => {
+    useFocusEffect(useCallback(() => {
         getPlatforms().then(p => {
             setPlatforms([...p])
         })
-    })
+    }, []))
 
     return(
         <Animated.View style={[styles.box, animationStyle]}>

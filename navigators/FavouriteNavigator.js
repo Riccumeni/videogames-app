@@ -4,6 +4,7 @@ import {colors} from "../assets/colors";
 import GameScreen from "../screens/GameScreen";
 import {Favourite} from "../components/Favourite";
 import {FavouritesScreen} from "../screens/FavouritesScreen";
+import AddCommentScreen from "../screens/AddCommentScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,17 @@ export const FavouriteNavigator = () => {
                     opacity: .95,
                 },
             }} />
+            <Stack.Screen name="Add Comment" component={AddCommentScreen}
+                          options={{
+                              headerShown: true,
+                              headerTintColor: 'white',
+                              headerStyle: {
+                                  backgroundColor: colors.primary,
+                                  shadowOpacity: 0,
+                                  borderBottomWidth: 0,
+                              },
+                          }}
+            />
         </Stack.Navigator>
 
     );

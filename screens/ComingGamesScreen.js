@@ -1,8 +1,8 @@
-import {StyleSheet, View, Text, ScrollView, TouchableOpacity} from "react-native";
+import {StyleSheet, View, Text, ScrollView, TouchableOpacity, FlatList} from "react-native";
 import {colors} from "../assets/colors";
 import GameCard from "../components/GameCard";
 import {getGamesNextPage, getGamesPreviousPage} from "../data_sources/remote/Api";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 export const ComingGamesScreen = ({route, navigation}) => {
     const [games, setGames] = useState({})
@@ -11,11 +11,9 @@ export const ComingGamesScreen = ({route, navigation}) => {
 
     const scrollToTop = () => {
         if (scrollViewRef.current) {
-            // Use the scrollTo method to scroll to the top
             scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
         }
     };
-
 
     useEffect(() => {
         setGames(route.params.games)
@@ -25,8 +23,9 @@ export const ComingGamesScreen = ({route, navigation}) => {
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false} style={{marginHorizontal: 20}} ref={scrollViewRef}>
                 <Text style={styles.comingGamesText}>Next Coming Games</Text>
+
                 {
-                    games?.results?.map((game) => {
+                    games?.results?.map((game, key) => {
                         return <TouchableOpacity onPress={() => navigation.navigate("Game", {id: game?.id})}>
                             <GameCard full={true} name={game?.name} urlImage={game?.background_image} day={game?.released.split("-")[2]} month={game?.released.split("-")[1]}/>
                         </TouchableOpacity>

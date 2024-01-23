@@ -5,6 +5,7 @@ import {colors} from "../assets/colors";
 import GameScreen from "../screens/GameScreen";
 import {Favourite} from "../components/Favourite";
 import SearchScreen from "../screens/SearchScreen";
+import AddCommentScreen from "../screens/AddCommentScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,10 +18,9 @@ export const SearchNavigator = () => {
                 options={{
                     headerTintColor: "white",
                     headerStyle: {
-                        backgroundColor: colors.background,
+                        backgroundColor: colors.primary,
                         shadowOpacity: 0,
                         borderBottomWidth: 0,
-                        opacity: .95,
                     },
                 }}
             />
@@ -30,12 +30,22 @@ export const SearchNavigator = () => {
                 headerRight: () => ( <Favourite />),
                 headerTintColor: "white",
                 headerStyle: {
-                    backgroundColor: colors.background,
+                    backgroundColor: colors.primary,
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
-                    opacity: .95,
                 },
             }} />
+            <Stack.Screen name="Add Comment" component={AddCommentScreen}
+                          options={{
+                              headerShown: true,
+                              headerTintColor: 'white',
+                              headerStyle: {
+                                  backgroundColor: colors.primary,
+                                  shadowOpacity: 0,
+                                  borderBottomWidth: 0,
+                              },
+                          }}
+            />
         </Stack.Navigator>
 
     );

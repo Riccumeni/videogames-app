@@ -1,26 +1,56 @@
-import {StyleSheet, View, Text, ScrollView, TouchableOpacity, SafeAreaView, FlatList} from "react-native";
+import {
+    StyleSheet,
+    View,
+    Text,
+    ScrollView,
+    TouchableOpacity,
+    SafeAreaView,
+    FlatList,
+    ActivityIndicator, StatusBar, Button
+} from "react-native";
 import {colors} from "../assets/colors";
 import GameCard from "../components/GameCard";
-import {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
-import {MaterialIcons} from "@expo/vector-icons";
 import { AntDesign } from '@expo/vector-icons';
 import {useFocusEffect} from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const HomeScreen = ({navigation}) => {
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const [games, setGames] = useState([]);
-    const [favouritePlatforms, setFavouritePlatforms] = useState([])
     const [gamesBasedOnPlatforms, setGamesBasedOnPlatforms] = useState([])
 
-    let day = new Date().getDate().toString();
-    let month = new Date().getMonth().toString();
-    let year = new Date().getFullYear().toString();
+    const getUrlFromFavourite = async () =>  {
+        let resultPlatform = await AsyncStorage.getItem("platforms");
+        resultPlatform = JSON.parse(resultPlatform);
 
-    if(day.length === 1){
-        day = "0" + day;
+        let resultTags = await AsyncStorage.getItem("tags");
+        resultTags = JSON.parse(resultTags);
+
+        let resultGenres = await AsyncStorage.getItem("genres");
+        resultGenres = JSON.parse(resultGenres);
+
+        let platformsComma = resultPlatform.map((res) => {
+            return res.id;
+        })
+
+        let tagsComma = resultTags.map((res) => {
+            return res.id;
+        })
+
+        let genresComma = resultGenres.map((res) => {
+            return res.id;
+        })
+
+        return `https://api.rawg.io/api/games?platforms=${platformsComma.toString()}&tags=${tagsComma.toString()}&genres=${genresComma.toString()}&ordering=-metacritic&key=3f0a855ff4384b05af50094b2c218aaf`;
     }
+
+    let day = "01";
+    let month = (new Date().getMonth() + 1).toString();
+    let year = new Date().getFullYear().toString();
 
     if(month.length === 1){
         month = "0" + month;
@@ -30,28 +60,38 @@ export const HomeScreen = ({navigation}) => {
         axios.get(`https://api.rawg.io/api/games?dates=${year}-${month}-${day},${Number.parseInt(year) + 1}-${month}-${day}&ordering=-added&key=3f0a855ff4384b05af50094b2c218aaf`)
             .then(result => {
                 setGames(result.data)
+                setIsLoading(false);
             })
     }, [])
 
-    useFocusEffect(useCallback(() => {
-        AsyncStorage.getItem("platforms").then(result => {
-            result = JSON.parse(result);
-            setFavouritePlatforms([...result])
-            let platformsComma = result.map((res) => {
-                return res.id
+    useFocusEffect(useCallback(  () => {
+
+        if(global.platformChanged){
+
+            getUrlFromFavourite().then((url) => {
+                axios.get(url).then(response => {
+                    setGamesBasedOnPlatforms([...response.data.results])
+                }).catch(e => {
+                    console.warn(e)
+                })
             })
 
-            axios.get(`https://api.rawg.io/api/games?platforms=${platformsComma.toString()}&ordering=-metacritic&key=3f0a855ff4384b05af50094b2c218aaf`).then(response => {
-                setGamesBasedOnPlatforms([...response.data])
-            })
-        })
-    }, []))
+            global.platformChanged = false;
+        }
+    }, []));
+
+    if(isLoading){
+        return (
+            <SafeAreaView style={{...styles.container, alignItems: 'center', justifyContent: 'center'}}>
+                <ActivityIndicator size="large" color="#fff" style={{alignSelf: 'center'}}/>
+            </SafeAreaView>
+        );
+    }
 
     return (
         <SafeAreaView style={styles.container}>
-
-            <ScrollView >
-
+            <StatusBar barStyle="light-content" />
+            <ScrollView>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 40, marginHorizontal: 20}}>
                     <Text style={styles.comingGamesText}>Next Coming Games</Text>
                     <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => navigation.navigate("Coming Games", {games: games})}>
@@ -59,24 +99,25 @@ export const HomeScreen = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
 
-                <FlatList style={{flexGrow: 0}} data={games.results?.slice(0, 9)} renderItem={(game) => {
+                <FlatList style={{flexGrow: 0}} keyExtractor={(game) => game.id} data={games.results?.slice(0, 9)} renderItem={(game) => {
                     return <TouchableOpacity onPress={() => navigation.navigate("Game", {id: game?.item.id})}>
-                        <GameCard name={game?.item.name} urlImage={game?.item.background_image} day={game?.item.released.split("-")[2]} month={game?.item.released.split("-")[1]}/>
+                        <GameCard name={game?.item.name} urlImage={game?.item.background_image} day={game?.item.released?.split("-")[2]} month={game?.item.released?.split("-")[1]}/>
                     </TouchableOpacity>
                 }} horizontal={true} showsHorizontalScrollIndicator={false}/>
 
                 {
                     gamesBasedOnPlatforms.length > 0 ?
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 40, marginHorizontal: 20}}>
-                        <Text style={styles.comingGamesText}>Best games based on your favourite platform</Text>
+                        <Text style={styles.comingGamesText}>Best games based on your preferences</Text>
                         <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => navigation.navigate("Coming Games", {games: gamesBasedOnPlatforms})}>
                             <AntDesign name="right" size={24} color="white" />
                         </TouchableOpacity>
                     </View> : undefined
                 }
-                <FlatList style={{flexGrow: 0}} data={gamesBasedOnPlatforms.results?.slice(0, 9)} renderItem={(game) => {
+
+                <FlatList style={{flexGrow: 0}} data={gamesBasedOnPlatforms?.slice(0, 9)} renderItem={(game) => {
                     return <TouchableOpacity onPress={() => navigation.navigate("Game", {id: game?.item.id})}>
-                        <GameCard name={game?.item.name} urlImage={game?.item.background_image} day={game?.item.released.split("-")[2]} month={game?.item.released.split("-")[1]}/>
+                        <GameCard name={game?.item.name} urlImage={game?.item.background_image}/>
                     </TouchableOpacity>
                 }} horizontal={true} showsHorizontalScrollIndicator={false}/>
             </ScrollView>
@@ -92,7 +133,7 @@ const styles = StyleSheet.create({
     },
     comingGamesText: {
         color: "white",
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: "bold",
     }
 });

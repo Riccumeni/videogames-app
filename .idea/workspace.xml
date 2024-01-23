@@ -5,11 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f86ae4ee-da7f-484f-9d77-a881c92fc71a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data_sources/local/Storage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_sources/remote/Api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/AddCommentScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/colors.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/colors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/BoxPreference.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/BoxPreference.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Favourite.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Favourite.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/GameCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/GameCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigators/FavouriteNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigators/FavouriteNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigators/HomeNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigators/HomeNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigators/SearchNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigators/SearchNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigators/SettingsNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigators/SettingsNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/ComingGamesScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ComingGamesScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/FavouritesScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/FavouritesScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/GameScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/GameScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/PlatformsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/PlatformsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/SearchScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SearchScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/SettingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SettingsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo.md" beforeDir="false" afterPath="$PROJECT_DIR$/todo.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/Utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <list id="3a2ad789-2fdf-4f08-a7d4-02a469c24845" name="Changes by icts22-24.046" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -126,6 +143,30 @@
       <workItem from="1694692938524" duration="4075000" />
       <workItem from="1694762490594" duration="2530000" />
       <workItem from="1694850793981" duration="4302000" />
+      <workItem from="1695024683808" duration="2153000" />
+      <workItem from="1695026948558" duration="190000" />
+      <workItem from="1695213111536" duration="12000" />
+      <workItem from="1695285357318" duration="2459000" />
+      <workItem from="1695635635975" duration="3106000" />
+      <workItem from="1695654833726" duration="175000" />
+      <workItem from="1695821314803" duration="14000" />
+      <workItem from="1695893086921" duration="3405000" />
+      <workItem from="1698655068070" duration="3746000" />
+      <workItem from="1698661803072" duration="4651000" />
+      <workItem from="1698683381618" duration="16000" />
+      <workItem from="1698751545479" duration="1004000" />
+      <workItem from="1699433483150" duration="47000" />
+      <workItem from="1699439614733" duration="735000" />
+      <workItem from="1699443518492" duration="640000" />
+      <workItem from="1700211300617" duration="606000" />
+      <workItem from="1700398095584" duration="4238000" />
+      <workItem from="1700473256189" duration="503000" />
+      <workItem from="1700572673286" duration="10089000" />
+      <workItem from="1704378654110" duration="102000" />
+      <workItem from="1704899798176" duration="295000" />
+      <workItem from="1705756312087" duration="5906000" />
+      <workItem from="1705917418377" duration="1752000" />
+      <workItem from="1706005061441" duration="2013000" />
     </task>
     <servers />
   </component>
@@ -145,16 +186,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint log-message="true" log-stack="true" type="javascript">
-          <url>file://$PROJECT_DIR$/screens/HomeScreen.js</url>
-          <line>20</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

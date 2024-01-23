@@ -1,4 +1,4 @@
-import {FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {React, useEffect, useState} from "react";
 import {colors} from "../assets/colors";
 import {Entypo, Fontisto, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
@@ -23,21 +23,29 @@ const deletePlatform = async (platformSelected, category) => {
 
 const addPlatform = async (platformSelected, category) => {
     let platforms = await AsyncStorage.getItem(category);
+
     if(platformSelected != null && platforms != null){
         platforms = JSON.parse(platforms);
     }else{
-        platforms = JSON.parse('[]')
+        platforms = JSON.parse('[]');
     }
 
+    let isAlreadyInPlatform = false;
+
+
     for (const platform of platforms) {
-        if (platform === platformSelected) {
-            return platforms;
+        if (platform['name'].toUpperCase() === platformSelected['name'].toUpperCase()) {
+            isAlreadyInPlatform = true;
         }
     }
 
 
-    platforms.push(platformSelected);
-    await AsyncStorage.setItem(category, JSON.stringify(platforms));
+    if(!isAlreadyInPlatform){
+        platforms.push(platformSelected);
+        await AsyncStorage.setItem(category, JSON.stringify(platforms));
+    }
+
+
     return platforms
 }
 
@@ -56,6 +64,7 @@ export const PlatformsScreen = ({route}) => {
     let [platforms, setPlatforms] = useState([])
 
     const [favouritePlatforms, setFavouritePlatforms] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getPlatforms(route.params.name).then(platforms => {
@@ -71,17 +80,27 @@ export const PlatformsScreen = ({route}) => {
                 }
             })
             setPlatforms(platformsResponseMapped);
+            setIsLoading(false);
         })
     }, []);
 
+    if(isLoading){
+        return (
+            <SafeAreaView style={{...styles.container, alignItems: 'center', justifyContent: 'center'}}>
+                <ActivityIndicator size="large" color="#fff" style={{alignSelf: 'center'}}/>
+            </SafeAreaView>
+        );
+    }
 
     return (
         <SafeAreaView style={styles.background}>
             <Text style={styles.title}>Set Favourite Platforms</Text>
 
             <FlatList showsHorizontalScrollIndicator={false} data={favouritePlatforms} renderItem={(platform) => {
-                return <View style={styles.tinyBox}>
-                    {getIcon(platform.item.name)}
+                return <View style={typeof getIcon(platform.item.name) !== "undefined" ? styles.tinyBox : styles.largeBox}>
+                    {
+                        typeof getIcon(platform.item.name) === "undefined" ? <Text style={{color: 'white', fontWeight: '600'}}>{platform.item.name}</Text> : getIcon(platform.item.name)
+                    }
                 </View>
             }} horizontal={true} />
 
@@ -89,7 +108,8 @@ export const PlatformsScreen = ({route}) => {
                 return <TouchableOpacity style={styles.box} onPress={() => {
                     addPlatform(platform.item, route.params.name).then((p) => {
                         setFavouritePlatforms([...p])
-                    })
+                        global.platformChanged = true;
+                    }).catch(e => console.warn(e))
                 }}>
                     <View style={{flexDirection: 'row', gap: 20}}>
                         {getIcon(platform.item.name)}
@@ -98,7 +118,7 @@ export const PlatformsScreen = ({route}) => {
                     <TouchableOpacity style={{backgroundColor: 'white', padding: 5, borderRadius: 10}} onPress={() => {
                         deletePlatform(platform.item, route.params.name).then((p) => {
                             setFavouritePlatforms([...p])
-
+                            global.platformChanged = true;
                         })
                     }}>
                         <Entypo name="cross" size={24} color={colors.background} />
@@ -138,6 +158,16 @@ const styles = StyleSheet.create({
         marginVertical: 20,
         borderRadius: 10,
         justifyContent: 'center'
+    },
+
+    largeBox: {
+        backgroundColor: "#1D242E",
+        height: 50,
+        marginHorizontal: 15,
+        marginVertical: 20,
+        borderRadius: 10,
+        justifyContent: 'center',
+        paddingHorizontal: 10
     },
 
     text: {

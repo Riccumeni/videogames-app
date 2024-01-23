@@ -1,12 +1,17 @@
-import {ImageBackground, StyleSheet, View, Text, ScrollView, Image, SafeAreaView, TouchableOpacity} from "react-native";
+import {
+    StyleSheet,
+    View,
+    Text,
+    ScrollView,
+    Image,
+    TouchableOpacity,
+    ActivityIndicator, FlatList
+} from "react-native";
 import React, {useEffect, useState} from "react";
 import {colors} from "../assets/colors";
-import {Colors} from "react-native/Libraries/NewAppScreen";
 import axios from "axios";
-import HTMLView from 'react-native-htmlview';
 import TagCard from "../components/TagCard";
-import {FontAwesome, Ionicons} from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Entypo, FontAwesome, Ionicons} from '@expo/vector-icons';
 import {Favourite} from "../components/Favourite";
 import {StackActions} from "@react-navigation/native";
 
@@ -15,7 +20,8 @@ import {StackActions} from "@react-navigation/native";
 export const GameScreen = ({route, navigation}) => {
 
     let [game, setGame] = useState({});
-    let [image, setImage] = useState([]);
+    let [images, setImages] = useState([]);
+    let [comments, setComments] = useState([]);
 
     useEffect(() => {
         axios.get(`https://api.rawg.io/api/games/${route.params.id}?key=3f0a855ff4384b05af50094b2c218aaf`)
@@ -25,13 +31,21 @@ export const GameScreen = ({route, navigation}) => {
 
         axios.get(`https://api.rawg.io/api/games/${route.params.id}/screenshots?key=3f0a855ff4384b05af50094b2c218aaf`)
             .then(result => {
-                setImage(() => result.data.results);
+                setImages(() => result.data.results);
             })
+            .catch(e => console.warn(e))
+
+        axios.defaults.headers['apikey'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqY3F2b3B0Ynd0ZXB2ZmRicWtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDU3NTYyNTYsImV4cCI6MjAyMTMzMjI1Nn0.L1aodZDbzjcEatsGLyoSRPtgzwFjvmR-xSVFG4dM3NM';
+        axios.defaults.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqY3F2b3B0Ynd0ZXB2ZmRicWtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDU3NTYyNTYsImV4cCI6MjAyMTMzMjI1Nn0.L1aodZDbzjcEatsGLyoSRPtgzwFjvmR-xSVFG4dM3NM'
+
+        axios.get(`https://rjcqvoptbwtepvfdbqke.supabase.co/rest/v1/comments?select=*&game_id=eq.${route.params.id}`).then(result => {
+            setComments(result.data)
+        })
     }, [])
 
 
     return(
-        Object.keys(game).length === 0 ? <Text>Is loading</Text> :
+        Object.keys(game).length === 0 ? <View style={{...styles.container, justifyContent: 'center'}}><ActivityIndicator size="large" color="#fff" /></View> :
         <View style={styles.container} >
             <View style={styles.topBar}>
                 <TouchableOpacity style={{flexDirection: 'row', alignItems: 'baseline'}} onPress={() => navigation.dispatch(StackActions.popToTop())}>
@@ -58,41 +72,49 @@ export const GameScreen = ({route, navigation}) => {
                 <Text style={styles.description}>{game.description_raw?.split(".")[0] + game.description_raw?.split(".")[1] + "."}</Text>
 
                 <Text style={styles.titleSection}>Genre</Text>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{paddingLeft: 20}}>
-                    {
-                        game.genres?.map((genre) => {
-                            return <TagCard name={genre.name}/>
-                        })
-                    }
-                </ScrollView>
+
+                <FlatList style={{paddingLeft: 20}} data={game.genres} renderItem={(genre => {
+                    return <TagCard name={genre.item.name}/>
+                })} horizontal={true} showsHorizontalScrollIndicator={false}/>
 
                 <Text style={styles.titleSection}>Platforms</Text>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{paddingLeft: 20}}>
-                    {
-                        game.platforms?.map((platform) => {
-                            return <TagCard name={platform.platform.name}/>
-                        })
-                    }
-                </ScrollView>
+
+                <FlatList style={{paddingLeft: 20}} data={game.platforms} renderItem={(platform => {
+                    return <TagCard name={platform.item.platform.name}/>
+                })} horizontal={true} showsHorizontalScrollIndicator={false}/>
 
                 <Text style={styles.titleSection}>Tags</Text>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{paddingLeft: 20}}>
-                    {
-                        game.tags?.map((tag) => {
-                            return <TagCard name={tag.name}/>
-                        })
-                    }
-                </ScrollView>
+
+                <FlatList style={{paddingLeft: 20}} data={game.tags} renderItem={(tag => {
+                    return <TagCard name={tag.item.name}/>
+                })} horizontal={true} showsHorizontalScrollIndicator={false}/>
 
                 <Text style={styles.titleSection}>Screenshots</Text>
-                <ScrollView horizontal={true} style={{marginBottom: 20, paddingLeft: 20}} showsHorizontalScrollIndicator={false}>
-                    {
-                        image?.map((image) => {
-                            return <Image source={{uri: image.image}} style={{width: 300, height: 170, borderRadius: 20, marginRight: 20}}/>
 
-                        })
-                    }
-                </ScrollView>
+                <FlatList style={{paddingLeft: 20, marginBottom: 20}} data={images} renderItem={(image) => {
+                    return <TouchableOpacity ><Image source={{uri: image.item.image}} style={{width: 300, height: 170, borderRadius: 20, marginRight: 20}}/></TouchableOpacity>
+                }} horizontal={true} showsHorizontalScrollIndicator={false}/>
+
+                <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginEnd: 20}}>
+                    <Text style={styles.titleSection}>Comments</Text>
+
+                    <TouchableOpacity style={{backgroundColor: '#363E4C', padding: 5, borderRadius: 10, height: 40, width: 40, alignSelf: 'center'}} onPress={() => navigation.navigate("Add Comment", {id: game.id, comments: comments, setComments: setComments})}>
+                        <Entypo name="plus" size={24} color="white" style={{alignSelf: 'center'}}/>
+                    </TouchableOpacity>
+
+                </View>
+
+                {
+                    comments.length > 0 ?comments.map((comment) => {
+                        return(
+                            <View style={{display: 'flex', flexDirection: 'column', padding: 20, backgroundColor: '#363E4C', margin: 20, borderRadius: 10}}>
+                                <Text style={{color: 'white', fontSize: 18, fontWeight: '600', marginBottom: 10}}>{comment.title}</Text>
+                                <Text style={{color: 'white', fontSize: 14}}>{comment.body}</Text>
+                            </View>
+                        );
+                    }) : <View style={{height: 150, alignItems: 'center', justifyContent: 'center'}}><Text style={{color: 'white', alignSelf: 'center'}}>There is no comments</Text></View>
+                }
+
             </ScrollView>
         </View>
     );
@@ -103,12 +125,12 @@ export default GameScreen;
 const styles = StyleSheet.create({
     topBar: {
         width: "100%",
-        height: 80,
-        backgroundColor: colors.background,
+        height: 100,
+        backgroundColor: colors.primary,
         justifyContent: "space-between",
         padding: 10,
         flexDirection: "row",
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
     },
     container: {
         flex: 1,

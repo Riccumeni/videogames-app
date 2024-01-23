@@ -24,7 +24,6 @@ export const Favourite = (props) => {
         favourites = await favourites.filter(favourite => {
             return favourite.id !== game.id;
         })
-
         await AsyncStorage.setItem("favourites", JSON.stringify(favourites));
     }
 
@@ -35,6 +34,7 @@ export const Favourite = (props) => {
         }else{
             favourites = JSON.parse('[]')
         }
+
         favourites.push(game);
         await AsyncStorage.setItem("favourites", JSON.stringify(favourites));
     }
@@ -48,8 +48,6 @@ export const Favourite = (props) => {
             }
         })
     }, []);
-
-
 
     let [color, setColor] = useState("#001C37");
     return (

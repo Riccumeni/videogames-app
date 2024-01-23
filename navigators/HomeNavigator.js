@@ -6,6 +6,7 @@ import {ComingGamesScreen} from "../screens/ComingGamesScreen";
 import {colors} from "../assets/colors";
 import GameScreen from "../screens/GameScreen";
 import {Favourite} from "../components/Favourite";
+import AddCommentScreen from "../screens/AddCommentScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,10 +20,9 @@ export const HomeNavigator = () => {
                         headerShown: true,
                         headerTintColor: 'white',
                         headerStyle: {
-                            backgroundColor: "#1D242E",
+                            backgroundColor: colors.primary,
                             shadowOpacity: 0,
                             borderBottomWidth: 0,
-                            opacity: .95,
                         },
                     }}
                 />
@@ -30,10 +30,9 @@ export const HomeNavigator = () => {
                     headerTitle : "",
                     headerTintColor: "white",
                     headerStyle: {
-                        backgroundColor: colors.background,
+                        backgroundColor: colors.primary,
                         shadowOpacity: 0,
                         borderBottomWidth: 0,
-                        opacity: .95,
                     },
                 }}/>
                 <Stack.Screen name="Game" component={GameScreen} options={{
@@ -41,12 +40,23 @@ export const HomeNavigator = () => {
                     headerShown: false,
                     headerTintColor: "white",
                     headerStyle: {
-                        backgroundColor: colors.background,
+                        backgroundColor: colors.primary,
                         shadowOpacity: 0,
                         borderBottomWidth: 0,
-                        opacity: .95,
                     },
                 }} />
+
+                <Stack.Screen name="Add Comment" component={AddCommentScreen}
+                              options={{
+                                  headerShown: true,
+                                  headerTintColor: 'white',
+                                  headerStyle: {
+                                      backgroundColor: colors.primary,
+                                      shadowOpacity: 0,
+                                      borderBottomWidth: 0,
+                                  },
+                              }}
+                />
             </Stack.Navigator>
 
     );

@@ -19,10 +19,9 @@ export const SettingsNavigator = () => {
                     headerShown: true,
                     headerTintColor: 'white',
                     headerStyle: {
-                        backgroundColor: "#1D242E",
+                        backgroundColor: colors.primary,
                         shadowOpacity: 0,
                         borderBottomWidth: 0,
-                        opacity: .95,
                     },
                     tabBarIcon: ({focused}) => {return <Ionicons name="settings" size={24} color="white" style={{alignSelf: "center", opacity: focused ? 1 : .5}}/>}
                 }}
@@ -34,10 +33,9 @@ export const SettingsNavigator = () => {
                     headerShown: true,
                     headerTintColor: 'white',
                     headerStyle: {
-                        backgroundColor: "#1D242E",
+                        backgroundColor: colors.primary,
                         shadowOpacity: 0,
                         borderBottomWidth: 0,
-                        opacity: .95,
                     },
                     tabBarIcon: ({focused}) => {return <Ionicons name="settings" size={24} color="white" style={{alignSelf: "center", opacity: focused ? 1 : .5}}/>}
                 }}

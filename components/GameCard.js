@@ -1,4 +1,4 @@
-import {ImageBackground, StyleSheet, Text, View} from "react-native";
+import {ImageBackground, Platform, StyleSheet, Text, View} from "react-native";
 import { BlurView } from 'expo-blur';
 
 export const GameCard = (props) => {
@@ -57,17 +57,22 @@ export const GameCard = (props) => {
     }
 
     return (
-        <ImageBackground style={styles.container} source={{uri: props.urlImage}} borderRadius="20" >
+        <ImageBackground style={styles.container} source={{uri: props.urlImage}} borderRadius={20} >
             <View style={{borderBottomRightRadius: 20, borderBottomLeftRadius: 20, height: 50, width: "100%", overflow: "hidden"}}>
-                <BlurView style={styles.titleContainer}>
+                {Platform.OS === "ios" ? <BlurView style={styles.titleContainer}>
                     <Text style={styles.titleText}>{props.name}</Text>
-                </BlurView>
+                </BlurView> : <View style={styles.titleContainer}>
+                    <Text style={styles.titleText}>{props.name}</Text>
+                </View>}
             </View>
             {props.day ? <View style={{borderTopRightRadius: 20, borderBottomLeftRadius: 20, height: 70, width: 70, overflow: "hidden", position: "absolute", top: 0, right: 0}}>
-                <BlurView style={{...styles.titleContainer, paddingLeft: 0, alignItems: 'center'}}>
+                {Platform.OS === "ios" ? <BlurView style={{...styles.titleContainer, paddingLeft: 0, alignItems: 'center'}}>
                     <Text style={{...styles.titleText, fontSize: 24}}>{props.day}</Text>
                     <Text style={{...styles.titleText, fontSize: 16}}>{month}</Text>
-                </BlurView>
+                </BlurView> : <View style={{...styles.titleContainer, paddingLeft: 0, alignItems: 'center'}}>
+                    <Text style={{...styles.titleText, fontSize: 24}}>{props.day}</Text>
+                    <Text style={{...styles.titleText, fontSize: 16}}>{month}</Text>
+                </View>}
             </View> : ""}
         </ImageBackground>
     );

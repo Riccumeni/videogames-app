@@ -1,5 +1,6 @@
 import {Fontisto, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import {React} from "react";
+import {Text} from "react-native";
 
 export const getIcon = (platform) => {
     let icon;

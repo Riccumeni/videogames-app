@@ -3,4 +3,5 @@
 - [ ] Nella schermata Search inserire la possibilità di mettere filtri
 - [ ] Nelle Game Card inserire la possibilità di mettere/togliere dai preferiti senza dover entrare dentro la schermata del gioco
 - [ ] Dividere la logica business dalla logica dei componenti
-- [ ] Sostituire la map di coming games con la flat list
+- [x] Sostituire la map di coming games con la flat list
+- [ ] Problema platform screen inserimento nuove piattaforme
